@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FortKnox - Ultra Secure Password Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+        }
+
+        .dark {
+            --bg-color: var(--darker);
+            --text-color: var(--light);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(100, 116, 139, 0.2);
+        }
+
+        .light {
+            --bg-color: var(--light);
+            --text-color: var(--dark);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(203, 213, 225, 0.5);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+        }
+
+        .particle {
+            position: absolute;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .security-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .security-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 100px;
+        }
+
+        .security-wave .shape-fill {
+            fill: rgba(30, 41, 59, 0.7);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased dark">
+    <!-- Particles Background -->
+    <div id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-opacity-80 backdrop-filter backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-lock-open gradient-text text-2xl mr-2"></i>
+                        <span class="text-xl font-bold gradient-text">FortKnox</span>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-8">
+                    <a href="#features" class="nav-link text-gray-400 hover:text-white px-3 py-2 text-sm font-medium">Features</a>
+                    <a href="#security" class="nav-link text-gray-400 hover:text-white px-3 py-2 text-sm font-medium">Security</a>
+                    <a href="#download" class="nav-link text-gray-400 hover:text-white px-3 py-2 text-sm font-medium">Download</a>
+                    <a href="https://github.com/yourusername/fortknox" target="_blank" class="nav-link text-gray-400 hover:text-white px-3 py-2 text-sm font-medium">
+                        <i class="fab fa-github mr-1"></i> GitHub
+                    </a>
+                  
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative pt-32 pb-24 px-4 sm:py-40 sm:px-6 lg:px-8 text-center overflow-hidden">
+        <div class="absolute inset-0 gradient-bg opacity-20"></div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <h1 id="hero-title" class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl mb-6">
+                Your Digital Vault, <span class="gradient-text">Secured</span>
+            </h1>
+            <p id="hero-subtitle" class="mt-6 text-xl max-w-3xl mx-auto opacity-0">
+                FortKnox provides military-grade encryption for your passwords with a simple, beautiful interface.
+            </p>
+            <div id="hero-buttons" class="mt-10 flex justify-center space-x-4 opacity-0">
+                <a href="#download" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 btn-glow">
+                    <i class="fas fa-download mr-2"></i> Download Now
+                </a>
+                <a href="#features" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-opacity-60 hover:bg-opacity-70 glass-card">
+                    <i class="fas fa-star mr-2"></i> Explore Features
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="py-16 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base gradient-text font-semibold tracking-wide uppercase">Features</h2>
+                <p class="mt-2 text-3xl font-extrabold sm:text-4xl">
+                    Everything you need in a password manager
+                </p>
+            </div>
+
+            <div class="mt-16">
+                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Feature 1 -->
+                    <div class="feature-card opacity-0 transform translate-y-10">
+                        <div class="glass-card rounded-xl p-6 h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                            <div class="text-center">
+                                <span class="feature-icon">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <h3 class="mt-4 text-lg font-medium">Secure Storage</h3>
+                                <p class="mt-2 text-base opacity-80">
+                                    All passwords encrypted with PBKDF2 and AES-256. Your master password never leaves your device.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="feature-card opacity-0 transform translate-y-10">
+                        <div class="glass-card rounded-xl p-6 h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                            <div class="text-center">
+                                <span class="feature-icon">
+                                    <i class="fas fa-key"></i>
+                                </span>
+                                <h3 class="mt-4 text-lg font-medium">Password Generator</h3>
+                                <p class="mt-2 text-base opacity-80">
+                                    Create strong, random passwords with customizable length and character sets.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="feature-card opacity-0 transform translate-y-10">
+                        <div class="glass-card rounded-xl p-6 h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                            <div class="text-center">
+                                <span class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </span>
+                                <h3 class="mt-4 text-lg font-medium">Security Audit</h3>
+                                <p class="mt-2 text-base opacity-80">
+                                    Identify weak, duplicate, or compromised passwords with our built-in security tools.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="feature-card opacity-0 transform translate-y-10">
+                        <div class="glass-card rounded-xl p-6 h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                            <div class="text-center">
+                                <span class="feature-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </span>
+                                <h3 class="mt-4 text-lg font-medium">QR Sharing</h3>
+                                <p class="mt-2 text-base opacity-80">
+                                    Securely share passwords via QR codes that can be scanned by mobile devices.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="feature-card opacity-0 transform translate-y-10">
+                        <div class="glass-card rounded-xl p-6 h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                            <div class="text-center">
+                                <span class="feature-icon">
+                                    <i class="fas fa-clock"></i>
+                                </span>
+                                <h3 class="mt-4 text-lg font-medium">Auto-Lock</h3>
+                                <p class="mt-2 text-base opacity-80">
+                                    Automatically locks after period of inactivity to protect your sensitive data.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 6 -->
+                    <div class="feature-card opacity-0 transform translate-y-10">
+                        <div class="glass-card rounded-xl p-6 h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                            <div class="text-center">
+                                <span class="feature-icon">
+                                    <i class="fas fa-crosshairs"></i>
+                                </span>
+                                <h3 class="mt-4 text-lg font-medium">Emergency Lockdown</h3>
+                                <p class="mt-2 text-base opacity-80">
+                                    Instantly lock your vault and clear all sensitive data from memory with one click.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Section -->
+    <div id="security" class="py-16 relative bg-opacity-50 bg-gray-900">
+        <div class="security-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base gradient-text font-semibold tracking-wide uppercase">Security</h2>
+                <p class="mt-2 text-3xl font-extrabold sm:text-4xl">
+                    Built with your security in mind
+                </p>
+            </div>
+
+            <div class="mt-10">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+                    <div class="glass-card p-6 rounded-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 opacity-0 security-card">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-md p-2">
+                                <i class="fas fa-user-secret text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium">Zero-Knowledge Architecture</h3>
+                                <p class="mt-1 opacity-80">
+                                    Your master password is never stored or transmitted. Without it, not even we can access your data.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 opacity-0 security-card">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-md p-2">
+                                <i class="fas fa-atom text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium">Quantum-Resistant Encryption</h3>
+                                <p class="mt-1 opacity-80">
+                                    Uses PBKDF2 with 600,000 iterations of SHA-512 to protect against future quantum computing threats.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 opacity-0 security-card">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-md p-2">
+                                <i class="fas fa-clipboard text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium">Clipboard Protection</h3>
+                                <p class="mt-1 opacity-80">
+                                    Automatically clears your clipboard after 30 seconds to prevent password leaks.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 opacity-0 security-card">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-100 rounded-md p-2">
+                                <i class="fas fa-code-branch text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium">Open Source</h3>
+                                <p class="mt-1 opacity-80">
+                                    Fully transparent codebase that can be audited by security experts worldwide.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Download Section -->
+<div id="download" class="py-16 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+          <h2 class="text-base gradient-text font-semibold tracking-wide uppercase">Download</h2>
+          <p class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+              Get started with FortKnox today
+          </p>
+      </div>
+
+      <div class="mt-12 flex justify-center items-center">
+          <!-- Windows -->
+          <div class="download-card opacity-0 transform translate-y-10">
+              <div class="glass-card rounded-xl max-w-4xl px-12 pb-16 h-full border border-gray-700 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                  <div class="-mt-6">
+                      <div class="text-center">
+                          <span class="inline-flex items-center justify-center p-8 bg-blue-500 rounded-md shadow-lg">
+                              <i class="fab fa-windows text-white text-4xl"></i>
+                          </span>
+                          <h3 class="mt-10 text-2xl font-medium">Windows</h3>
+                          <p class="mt-6 text-xl opacity-80">
+                              Requires Windows 10 or later
+                          </p>
+                          <div class="mt-10">
+                              <a href="FortKnox.exe" class="inline-flex items-center px-12 py-6 border border-transparent text-lg font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 btn-glow">
+                                  <i class="fas fa-download mr-3"></i> Download (.exe)
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="glass-card mt-20">
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="col-span-2">
+                <h3 class="text-white text-lg font-semibold mb-4">FortKnox</h3>
+                <p class="opacity-80 text-sm">
+                    The most secure password manager for individuals <br> who value privacy and security.
+                </p>
+                <div class="mt-4 flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-white text-sm font-semibold tracking-wider uppercase mb-4">Product</h3>
+                <ul class="space-y-2">
+                    <li><a href="#features" class="opacity-80 hover:text-white text-sm">Features</a></li>
+                    <li><a href="#security" class="opacity-80 hover:text-white text-sm">Security</a></li>
+                    <li><a href="#" class="opacity-80 hover:text-white text-sm">Releases</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white text-sm font-semibold tracking-wider uppercase mb-4">Support</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="opacity-80 hover:text-white text-sm">Documentation</a></li>
+                    <li><a href="#" class="opacity-80 hover:text-white text-sm">Community</a></li>
+                    <li><a href="#" class="opacity-80 hover:text-white text-sm">Contact</a></li>
+                    <li><a href="#" class="opacity-80 hover:text-white text-sm">Privacy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-8 pt-8 border-t border-gray-700">
+            <p class="opacity-80 text-sm text-center">
+                &copy; 2025 FortKnox Password Manager. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+    <script>
+        // Initialize theme
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            html.classList.remove('dark');
+            html.classList.add('light');
+            themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Particles Background
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 20 : 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const opacity = Math.random() * 0.3 + 0.1;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                particle.style.opacity = opacity;
+                
+                container.appendChild(particle);
+                
+                // Animate particles
+                anime({
+                    targets: particle,
+                    translateX: {
+                        value: `+=${(Math.random() - 0.5) * 100}`,
+                        duration: duration * 1000,
+                        easing: 'easeInOutSine'
+                    },
+                    translateY: {
+                        value: `+=${(Math.random() - 0.5) * 100}`,
+                        duration: duration * 1000,
+                        easing: 'easeInOutSine'
+                    },
+                    delay: delay * 1000,
+                    direction: 'alternate',
+                    loop: true
+                });
+            }
+        }
+
+        // Hero Animation
+        function animateHero() {
+            anime.timeline()
+                .add({
+                    targets: '#hero-title',
+                    opacity: [0, 1],
+                    translateY: ['-30px', '0px'],
+                    duration: 800,
+                    easing: 'easeOutExpo'
+                })
+                .add({
+                    targets: '#hero-subtitle',
+                    opacity: [0, 1],
+                    translateY: ['20px', '0px'],
+                    duration: 600,
+                    easing: 'easeOutExpo'
+                }, '-=400')
+                .add({
+                    targets: '#hero-buttons',
+                    opacity: [0, 1],
+                    translateY: ['20px', '0px'],
+                    duration: 600,
+                    easing: 'easeOutExpo'
+                }, '-=400')
+                .add({
+                    targets: '#hero-image',
+                    opacity: [0, 1],
+                    duration: 1000,
+                    easing: 'easeOutExpo'
+                }, '-=500');
+        }
+
+        // Scroll Animations
+        function animateOnScroll() {
+            // Feature cards
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                anime({
+                    targets: card,
+                    opacity: [0, 1],
+                    translateY: ['30px', '0px'],
+                    delay: index * 100,
+                    duration: 800,
+                    easing: 'easeOutExpo',
+                    scrollTrigger: {
+                        trigger: '#features',
+                        start: 'top 70%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+
+            // Security cards
+            document.querySelectorAll('.security-card').forEach((card, index) => {
+                anime({
+                    targets: card,
+                    opacity: [0, 1],
+                    translateY: ['30px', '0px'],
+                    delay: index * 100,
+                    duration: 800,
+                    easing: 'easeOutExpo',
+                    scrollTrigger: {
+                        trigger: '#security',
+                        start: 'top 70%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+
+            // Download cards
+            document.querySelectorAll('.download-card').forEach((card, index) => {
+                anime({
+                    targets: card,
+                    opacity: [0, 1],
+                    translateY: ['30px', '0px'],
+                    delay: index * 100,
+                    duration: 800,
+                    easing: 'easeOutExpo',
+                    scrollTrigger: {
+                        trigger: '#download',
+                        start: 'top 70%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                anime({
+                    targets: [document.documentElement, document.body],
+                    scrollTop: document.querySelector(this.getAttribute('href')).offsetTop - 80,
+                    duration: 800,
+                    easing: 'easeInOutQuad'
+                });
+            });
+        });
+
+        // Initialize all animations
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            animateHero();
+            animateOnScroll();
+        });
+
+        // Simple scroll trigger polyfill
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY + window.innerHeight;
+            
+            document.querySelectorAll('[scrollTrigger]').forEach(element => {
+                const triggerPosition = element.offsetTop;
+                if (scrollPosition > triggerPosition) {
+                    const animation = element.getAttribute('scrollTrigger');
+                    // Execute animation
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
