@@ -1,0 +1,5 @@
+cryptography>=39.0.0
+pyperclip>=1.8.0
+zxcvbn>=4.4.28
+qrcode>=7.4.2
+Pillow>=9.0.0
