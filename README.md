@@ -23,7 +23,7 @@ FortKnox is a modern, open-source password manager built entirely in Python with
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/nuvmaan/fortknox.git
+git clone https://github.com/nuvmaan/FortKnox---Ultra-Secure-Password-Manager.git
 cd fortknox
 ```
 
